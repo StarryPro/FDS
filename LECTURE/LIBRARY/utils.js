@@ -19,29 +19,51 @@ function type(data) {
  * @returns {boolean}    - 데이터 일치 검증 결과를 참/거짓으로 반환
  */
 function isType(data, kind) {
-
-  // 데이터 검증 (유효성 검사: validate)
-  // 조건 문: if ~ else
-  // kind 매개변수(전달된 인자)의 유형이 문자열이 아니면... 조건이 참
-  // if (type(kind) !== 'string') {
-    // throw 'kind 전달 인자는 문자열이 전달되어야 합니다';
-  // }
-
-  // ⬇︎ --------------------------------------------------------------
-
-  // 위 코드 구문을 아래처럼 인라인 코드로 사용할 수 있도록 함수를 정의해보세요.
-
-  // kind 유형이 string이면 유효한 값이다.
-  valid(kind, 'string');
-
-  // kind 유형이 string이 아니면 유효하지 않은 값이다.
-  invalid(kind, 'string', 'kind 전달 인자는 문자열이 전달되어야 합니다');
-
-
-
-
-
-
-  // 유효성 검사를 통과하면 아래 코드를 실행
+  validate(kind, '!string', '2번째 전달인자는 문자열이어야 합니다');
   return type(data) === kind;
+}
+
+/**
+ * 전달된 데이터, 데이터 유형을 검증하여 값이 일치할 경우, 오류를 발생시키는 유틸리티 함수
+ *
+ * @param {any} data             - JavaScript 모든 데이터
+ * @param {string} kind          - 오류 검증을 위한 문자열 데이터
+ * @param {string} error_message - 오류 메시지
+ * @returns {string}             - 유효한 경우 출력되는 메시지
+ */
+function valid(data, kind, error_message) {
+  if ( type(data) === kind ) {
+    throw error_message || '두 값은 동일하기에 오류입니다.';
+  }
+  return '오류는 발생하지 않았습니다';
+}
+
+/**
+ * 전달된 데이터, 데이터 유형을 검증하여 값이 불일치할 경우, 오류를 발생시키는 유틸리티 함수
+ *
+ * @param {any} data             - JavaScript 모든 데이터
+ * @param {string} kind          - 오류 검증을 위한 문자열 데이터
+ * @param {string} error_message - 오류 메시지
+ * @returns {string}             - 유효한 경우 출력되는 메시지
+ */
+function invalid(data, kind, error_message) {
+  if ( type(data) !== kind ) {
+    throw error_message || '두 값이 다르기에 오류입니다.';
+  }
+  return '오류는 발생하지 않았습니다';
+}
+
+/**
+ * 전달된 데이터, 데이터 유형을 검증하여 조건이 참일 경우, 오류를 발생시키는 유틸리티 함수
+ *
+ * @param {any} data             - JavaScript 모든 데이터
+ * @param {string} kind          - 오류 검증을 위한 문자열 데이터
+ * @param {string} error_message - 오류 메시지
+ */
+function validate(data, kind, error_message) {
+  if ( kind.indexOf('!') > -1 ) {
+    invalid(data, kind.slice(1), error_message);
+  } else {
+    valid(data, kind, error_message);
+  }
 }
