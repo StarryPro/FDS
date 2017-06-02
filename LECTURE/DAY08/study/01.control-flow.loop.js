@@ -138,7 +138,7 @@ if ( isType(video_obj, 'object') ) {
 }
 
 
-console.group('고전 예제: 요일 출력');
+console.groupCollapsed('고전 예제: 요일 출력');
 
 var weekdays = ["일", "월", "화", "수", "목", "금", "토"];
 var today    = new Date();
@@ -149,7 +149,7 @@ var printDay = function(day) {
 };
 
 console.log('// if문');
-if ( weekday === 0 ) { printDay(weekdays[0]); }
+if ( weekday === 0 ) { console.log(printDay(weekdays[0])); }
 else if ( weekday === 1 ) { console.log(printDay(weekdays[1])); }
 else if ( weekday === 2 ) { console.log(printDay(weekdays[2])); }
 else if ( weekday === 3 ) { console.log(printDay(weekdays[3])); }
@@ -173,13 +173,127 @@ switch(weekday) {
 console.groupEnd('고전 예제: 요일 출력');
 
 
+console.groupCollapsed('예제 응용: 월/수/금은 시간이 됩니다.');
+
+console.log('// if문');
+weekday = 6;
+if (
+  weekday === 1 ||
+  weekday === 3 ||
+  weekday === 5
+) {
+  console.log('월/수/금은 시간이 됩니다.');
+}
+else {
+  console.warn('월/수/금 외에는 시간이 안됩니다.');
+}
+
+console.log('// switch문');
+switch(weekday) {
+  case 1:
+  case 3:
+  case 5:
+    console.log('월/수/금은 시간이 됩니다.');
+  break;
+  default:
+    console.warn('월/수/금 외에는 시간이 안됩니다.');
+}
+
+console.groupEnd('예제 응용: 월/수/금은 시간이 됩니다.');
+
+// ---------------------------------------
+// 3항 연산식
+// ? :
+console.groupCollapsed('3항 연산자 식 VS if 문');
+
+// 식(Expression)
+var result_message = isType(weekday, 'string') ? 'weekday is String.' : 'weekday isn\'t String.';
+console.log('연산 결과:', result_message);
+
+// 문(Statement)
+var today_is = null;
+if ( isType(today, 'date') ) {
+  today_is = 'Date Object';
+} else {
+  today_is = 'Not Date Object';
+}
+console.log(today_is);
+
+console.groupEnd('3항 연산자 식 VS if 문');
 
 
+console.groupCollapsed('3항 연산자 식 VS switch 문');
 
+var current_year    = today.getFullYear();
+var current_year_is = null;
+console.log('// switch 문');
+switch( type(current_year) ) {
+  case 'number':
+    current_year_is = 'This is Number Type.';
+  break;
+  case 'string':
+    current_year_is = 'This is String Type.';
+  break;
+  case 'boolean':
+    current_year_is = 'This is Boolean Type.';
+  break;
+  case 'function':
+    current_year_is = 'This is Function Type.';
+  break;
+  case 'array':
+    current_year_is = 'This is Array Type.';
+  break;
+  case 'object':
+    current_year_is = 'This is Object Type.';
+  break;
+  default:
+    current_year_is = 'This is not Number, String, Boolean, Function, Array, Object Type.';
+}
+
+console.log('switch 문 결과:', current_year_is);
+
+console.log('// 3항 연산자 식');
+var _type = type(new Date()); // type(current_year);
+var current_year_is =
+  (_type === 'number') ?
+    'This is Number Type.' :
+    (_type === 'string') ?
+    'This is String Type.' :
+      (_type === 'boolean') ?
+        'This is Boolean Type.' :
+        (_type === 'function') ?
+          'This is Function Type.' :
+          (_type === 'array') ?
+            'This is Array Type.' :
+            (_type === 'object') ?
+              'This is Object Type.' :
+              'This is not Number, String, Boolean, Function, Array, Object Type.';
+
+console.log('3항 연산식 결과:', current_year_is);
+
+console.groupEnd('3항 연산자 식 VS switch 문');
 
 
 // ---------------------------------------
-// try/catch/throw
+// try/catch/finally, throw
+console.groupCollapsed('try/catch/finally, throw');
+
+// try {
+//   // 명령이 실행되었을 때
+//   // 오류가 발생하지 않았거나
+//   // 오류가 발생했거나
+//   var last_weekday = weekday.pop(); // 오타 발생!
+//   console.log('last_weekday:', last_weekday);
+// } catch(error) {
+//   // throw  VS  console.error()
+//   // console.error()와 달리 throw는 뒤 구문을 중단한다.
+//   // console.error(error.message); // 오류 잡아서 오류 메시지 출력
+//   throw error.message;
+//   last_weekday = weekdays.pop();
+//   console.log(last_weekday);
+// }
+
+console.groupEnd('try/catch/finally, throw');
 
 
 
@@ -188,16 +302,67 @@ console.groupEnd('고전 예제: 요일 출력');
 // ——————————————————————————————————————
 
 // ---------------------------------------
-// for
+// while
+
+console.groupCollapsed('while 문');
+
+// 초기 값
+var k = 9;
+
+// 조건 확인
+// 조건 값이 참이면 {} 실행
+while ( k > 0 ) {
+  // break 또는 continue를 설정할 조건
+  // 9, 7, 5, 3, 1
+  // if ( k < 6 ) {
+  //   break;
+  // }
+  // 값 변경
+  // 조건이 거짓이 되는 순간이 와서
+  // 논리 오류에 빠져 무한 반복되지 않는다.
+  k = k - 2;
+  if ( k === 5 ) {
+    continue;
+  }
+  console.log('k:', k);
+}
 
 // ---------------------------------------
-// while
+// break/continue
+
+// break 는 멈춘다.
+// continue 현재 실행되는 부분만 점핑해서 넘어간다.
+// 문 내부의 명령 순서에 따라 결과가 달라질 수 있다.
+
+console.groupEnd('while 문');
+
 
 // ---------------------------------------
 // do...while
 
+console.group('do...while문');
+
+var math = Math;
+var count = 0;
+
+while( isType(math, 'math') ) {
+  console.log('count:', count);
+  console.log('Math is 수학 객체');
+  // 0, 1, 2, 3, 4
+  if ( count++ >= 4 ) {
+    math = new Error(); // Error {} 생성
+    // break;
+  }
+  // count = count + 1;
+  // count += 1;
+  // count++;
+  // ++count;
+}
+
+console.groupEnd('do...while문');
+
 // ---------------------------------------
-// break/continue
+// for
 
 // ---------------------------------------
 // for...in
