@@ -149,30 +149,11 @@
     },
   ];
 
+  // 새로운 아이템 추가
   data.push({
     index: 1062,
     alt: '청순 Dog~~'
   });
-
-  var controller = _.selector('.photo-showcase-controller [role=tablist]');
-
-  for ( var i=0, l=data.length; i<l; ++i ) {
-    var item = data[i];
-    var index = item.index;
-    var alt = item.alt;
-    var li = _.createEl('li');
-    li.setAttribute('role', 'presentation');
-    var a = _.createEl('a');
-    a.setAttribute('role', 'tab');
-    a.setAttribute('href', '');
-    a.setAttribute('class', 'photo-showcase-indicator');
-    var img = _.createEl('img');
-    img.setAttribute('src', 'https://unsplash.it/100/100?image=' + index);
-    img.setAttribute('alt', alt);
-    _.appendChild(li, a);
-    _.appendChild(a, img);
-    _.appendChild(controller, li);
-  }
 
   // 미션! 하드코딩하지 않고, 동적으로 코드를 생성/붙여보자.
   // 내비게이션 인디케이터를 동적으로 생성한다.
@@ -183,5 +164,74 @@
   //     <img src="https://unsplash.it/100/100?image=" alt="">
   //   </a>
   // </li>
+
+  var controller = _.selector('.photo-showcase-controller [role=tablist]');
+
+  var i=0, l=data.length;
+
+  for ( ; i<l; ++i ) {
+
+    var item = data[i];
+    var index = item.index;
+    var alt = item.alt;
+
+    var li = _.createEl('li');
+    li.setAttribute('role', 'presentation');
+
+    var a = _.createEl('a');
+    a.setAttribute('role', 'tab');
+    a.setAttribute('href', '');
+    a.setAttribute('class', 'photo-showcase-indicator');
+
+    var img = _.createEl('img');
+    img.setAttribute('src', 'https://unsplash.it/100/100?image=' + index);
+    img.setAttribute('alt', alt);
+
+    _.appendChild(li, a);
+    _.appendChild(a, img);
+    _.appendChild(controller, li);
+
+    // 클로저 함수 활용 예시
+    // 방법 1.
+    // a.onclick = function(index) {
+    //   return function(){
+    //     console.log(this, index);
+    //     return false;
+    //   };
+    // }(i);
+
+    // 이벤트 바인딩 (속성 <-> 함수)
+    // 방법 2.
+    // a.onclick = changeShowcaseViewWrapper(i);
+
+    // JavaScript 객체는 속성을 만들기가 너~~~~~무 쉽다.
+    // 객체의 속성을 추가하여 메모리하라.
+    // 방법 3.
+    // a???? <a> 요소노드 === JavaScript 객체
+    a.index = i;
+    a.onclick = changeShowcaseView;
+
+  }
+
+  // 방법 3.
+  function changeShowcaseView() {
+    // this === 클릭한 <a>
+    console.log(this, this.index);
+    // 기본 동작 차단 (구형)
+    return false;
+  };
+
+  // 이벤트 핸들러(함수) 정의
+  // 방법 2.
+  // function changeShowcaseViewWrapper(index) {
+    // return function changeShowcaseView() {
+    //   // this === 클릭한 <a>
+    //   console.log(this, index);
+    //   // 기본 동작 차단 (구형)
+    //   return false;
+    // };
+  // }
+
+
 
 })(window, window.document, window.FDS);
