@@ -109,6 +109,7 @@ var FDS = function(global){
     // 조건 처리
     // el.getElementsByClassName 지원하는가?
     // 'getElementsByClassName' in Element.prototype
+
     // 상황에 맞는 함수를 선별하여 할당한 후, 내보내자
     if ( 'getElementsByClassNames' in Element.prototype ) {
       _classAll = function(name, context) {
@@ -163,6 +164,13 @@ var FDS = function(global){
   var classSingle = function(name, context) {
     return classAll(name, context)[0];
   };
+  
+  // var selector = function(selector, context){
+  //     FDS.query(selector, context);
+  // };
+  // var selectorAll = function(selector, context){
+  //   FDS.queryAll(selector, context);
+  // };
 
   // ——————————————————————————————————————
   // DOM 탐색 API: 유틸리티 함수
