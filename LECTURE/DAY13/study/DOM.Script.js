@@ -81,7 +81,6 @@
     }
   }
   will_removed.reverse();
+  // console.log('will_removed:', will_removed);
 
-  console.log('will_removed:', will_removed);
-
-})(window, window.FDS);
+}) // (window, window.FDS);
