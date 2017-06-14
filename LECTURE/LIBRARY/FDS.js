@@ -100,14 +100,6 @@ var FDS = function(global){
   }
   var classAll = function(){
     var _classAll = null;
-<<<<<<< HEAD
-    // 조건 처리
-    // el.getElementsByClassName 지원하는가?
-    // 'getElementsByClassName' in Element.prototype
-
-    // 상황에 맞는 함수를 선별하여 할당한 후, 내보내자
-=======
->>>>>>> cf7444d19804b97430a7db6e5f22bc145f3dda4d
     if ( 'getElementsByClassNames' in Element.prototype ) {
       _classAll = function(name, context) {
         validateError(name, '!string', '첫번째 전달인자는 문자열을 전달해야 합니다.');
@@ -135,15 +127,7 @@ var FDS = function(global){
   var classSingle = function(name, context) {
     return classAll(name, context)[0];
   };
-<<<<<<< HEAD
-  
-  // var selector = function(selector, context){
-  //     FDS.query(selector, context);
-  // };
-  // var selectorAll = function(selector, context){
-  //   FDS.queryAll(selector, context);
-  // };
-=======
+
   var queryAll = function(selector, context){
     validateError(selector, '!string', '첫번째 인자는 CSS 선택자 문자열이어야 합니다.');
     context = context || document;
@@ -153,7 +137,6 @@ var FDS = function(global){
   var query = function(selector, context){
     return queryAll(selector, context)[0];
   };
->>>>>>> cf7444d19804b97430a7db6e5f22bc145f3dda4d
 
   // ——————————————————————————————————————
   // DOM 탐색 API: 유틸리티 함수
