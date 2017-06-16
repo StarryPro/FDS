@@ -261,7 +261,6 @@ var FDS = function(global){
     var target = firstChild(parent);
     return target ? insertBefore(child, target) : appendChild(parent, child);
   };
-  // target 노드 뒤에 insert 노드 삽입 유틸리티 함수
   var insertAfter = function(insert, target) {
     // target 뒤에 형제가 있나?
     var next = nextSibling(target);
@@ -278,7 +277,9 @@ var FDS = function(global){
   var after = function(target, insert) {
     return insertAfter(insert, target);
   };
-
+  var removeChild = function(child) {
+    return parent(child).removeChild(child);
+  };
 
   // ---------------------------------------
   // 반환: FDS 네임스페이스 객체
@@ -326,11 +327,11 @@ var FDS = function(global){
     createEl: createEl,
     appendChild: appendChild,
     prependChild: prependChild,
+    removeChild: removeChild,
     insertBefore: insertBefore,
     insertAfter: insertAfter,
     before: before,
     after: after,
-
   };
 
 }(window);
