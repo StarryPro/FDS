@@ -18,9 +18,10 @@
 
   // ES5 (2009)
   // Array.prototype.forEach() 인스턴스 메서드
-  // [3, 7, 9, 101].forEach(function(item, index, arr){
-  //   console.log(index);
-  // });
+  var data = [3, 7, 9, 101];
+  data.forEach(function(item, index, arr){
+    console.log(item);
+  });
 
   // 배열 생성자 프로토타입 객체의 메서드 forEach()를 빌려쓰자.
   var forEach = Array.prototype.forEach;
@@ -42,8 +43,14 @@
   };
 
   function copyEvent( copyed, copy ) {
-
+    // copyed: 능력을 복제할 자
+    // copy: 능력을 가진 자
+    forEach.call(copyed, function(item, index){
+      item.onclick = copy[index].onclick;
+    });
   }
+
+
 
 
 
